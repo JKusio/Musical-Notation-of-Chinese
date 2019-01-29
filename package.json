@@ -2,7 +2,7 @@
   "name": "musical-notation-of-chinese",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "start.js",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
