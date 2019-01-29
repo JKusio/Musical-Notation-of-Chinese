@@ -1,0 +1,9 @@
+div.form-container
+   form(method='POST',action='/translate')
+       div.form-group
+           label.input-label(for='text') Text to translate:
+           textarea#text.form-textarea(placeholder='Chinese text here',name='text')
+       div.form-group.form-checkbox-group
+           label.input-checkbox-label(for='extra') Chinese text below pinyin text:
+           input#extra.form-checkbox(type='checkbox',name='extra')
+       input.form-button(type='submit',value='Translate')
