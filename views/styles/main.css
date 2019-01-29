@@ -22,10 +22,11 @@
 
 .main {
     margin-top: 24px;
+    padding: 16px;
 }
 
 .form-container {
-    width: 800px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -82,7 +83,21 @@
     float: left;
 }
 
-.form-button:active {
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin-left: 16px;
+    width: 80px;
+    height: 40px;
+    border: none;
+    background-color: #202020;
+    color: #FFFFFF;
+    float: left;
+}
+
+.form-button:active, .button:active {
     height: 36px;
     transform: translateY(4px);
 }
