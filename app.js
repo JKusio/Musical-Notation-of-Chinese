@@ -22,7 +22,7 @@ app.get('/', function(req, res) {
 
 // renders post-translation page
 app.post('/translate', function(req, res) {
-    var file = mnc.generateFile(req.body.text);
+    var file = mnc.generateFile(req.body.text, req.body.extra);
 
     res.render('translate', {
            path: file

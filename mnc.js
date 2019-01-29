@@ -53,22 +53,55 @@ function translateToPinyin(text) {
 }
 
 // generate .ly file
-function generateFile(text) {
+function generateFile(text, extra) {
     var data = translateToPinyin(text);
 
     const PATH = FILE_PATH + `mnc_${d.getTime()}.ly`;
 
     let stream = fs.createWriteStream(PATH);
 
+    // get all chinese characters if set
+    var chinese = '';
+    if(extra) {
+        var reg_exp = /[^。]/g;
+        var m;
+
+        do {
+            m = reg_exp.exec(text);
+            if (m) {
+                chinese += m + ' ';
+            }
+        } while (m);
+    }
+
     stream.once('open', function(fd) {
-        stream.write("<score>\n");
+        stream.write("\\version \"2.14.1\"\n");
+        stream.write("<<\n");
         stream.write("{\n");
+        stream.write("\\clef treble\n");
+        stream.write("\t\\time 2/4 \n");
         stream.write(data.notes + "\n");
         stream.write("}\n");
         stream.write("\\addlyrics {\n");
         stream.write(data.text + "\n");
         stream.write("}\n");
-        stream.write("</score>");
+        stream.write(">>");
+
+        // add extra chinese text below if set
+        if(extra) {
+            stream.write("\n\n\n");
+            stream.write("<<\n");
+            stream.write("{\n");
+            stream.write("\\clef treble\n");
+            stream.write("\t\\time 2/4 \n");
+            stream.write(data.notes + "\n");
+            stream.write("}\n");
+            stream.write("\\addlyrics {\n");
+            stream.write(chinese + "\n");
+            stream.write("}\n");
+            stream.write(">>");
+        }
+
         stream.end();
     });
 
