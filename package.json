@@ -1,0 +1,27 @@
+{
+  "name": "musical-notation-of-chinese",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jison": "^0.4.18",
+    "pinyin": "^2.8.3",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KusioDev/Musical-Notation-of-Chinese.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KusioDev/Musical-Notation-of-Chinese/issues"
+  },
+  "homepage": "https://github.com/KusioDev/Musical-Notation-of-Chinese#readme"
+}
