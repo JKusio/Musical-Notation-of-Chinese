@@ -56,6 +56,8 @@ function translateToPinyin(text) {
 function generateFile(text, extra, to_polish) {
     var data = translateToPinyin(text);
 
+    d = new Date();
+
     const PATH = FILE_PATH + `mnc_${d.getTime()}.ly`;
 
     let stream = fs.createWriteStream(PATH);
