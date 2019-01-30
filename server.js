@@ -3,7 +3,7 @@
 var express = require('express');
 var server = express();
 const bodyParser = require('body-parser');
-server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.urlencoded({ extended: false }));
 var path = require('path');
 
 // musical notation of chinese

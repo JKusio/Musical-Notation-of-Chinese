@@ -13,28 +13,6 @@ const OPTIONS = {
     style: pinyin.STYLE_TONE2
 };
 
-let content = {
-    extra: false,
-
-    // normal tones
-    tones: [
-        "d''4(d''4)",
-        "b'8(d''8)",
-        "g'8(f'4 c''4)",
-        "e''4(g'4)"
-    ],
-    neutral_tones: [
-        "a'4(a'4)",
-        "b'4(b''4)",
-        "c'4(c''4)",
-        "g''4(g'4)"
-    ],
-    notes: '',
-    text: '',
-};
-
-var parser = createParser(content, "translator.jison");
-
 // creates pareser and pass some values into it
 function createParser(content, parser_path) {
     var bnf = fs.readFileSync(parser_path, "utf-8");
@@ -45,6 +23,29 @@ function createParser(content, parser_path) {
 
 // parsing, done in translator.jison files
 function translateToPinyin(text) {
+    // parser content
+    let content = {
+        extra: false,
+
+        // normal tones
+        tones: [
+            "d''4(d''4)",
+            "b'8(d''8)",
+            "g'8(f'4 c''4)",
+            "e''4(g'4)"
+        ],
+        neutral_tones: [
+            "a'4(a'4)",
+            "b'4(b''4)",
+            "c'4(c''4)",
+            "g''4(g'4)"
+        ],
+        notes: '',
+        text: '',
+    };
+
+    var parser = createParser(content, "translator.jison");
+
     const pin = pinyin(text, OPTIONS);
 
     let pin_sum = pin.reduce((a, b) => a + b, '');
@@ -87,6 +88,8 @@ function generateFile(text, extra, to_polish) {
         let polish_parser = createParser(polish_content, "polish.jison");
         polish_data = polish_parser.parse(data.text).content;
     }
+
+    console.log(data.text);
 
     stream.once('open', function(fd) {
         stream.write("\\version \"2.14.1\"\n");
