@@ -43,16 +43,16 @@ Next variable is `content` which is used in parser.
 It contains basic options of the parser, like musical representation of tones (syntax for <a href="http://lilypond.org/"> LilyPond </a>).
 
 There are 3 functions declared in this file:
-- `function createParser(content, parser_path)` which creates parser based on the `content` we want to use in the parser (which later we'll be able to use outside the parser) and `path` which is the path to the .jison file,
-- `function translateToPinyin(text)` which translates the chinese into the tones and lyrics in basic pinyin (not polish translated),
-- `function generateFile(text, extra, to_polish)` which runs the `translateToPinyin` function and based on the output creates the file.
+- `function createParser(content, parser_path)` which creates parser based on the `content` we want to use in the parser (which later we'll be able to use outside the parser) and `path` which is the path to the .jison file
+- `function translateToPinyin(text)` which translates the chinese into the tones and lyrics in basic pinyin (not polish translated)
+- `function generateFile(text, extra, to_polish)` which runs the `translateToPinyin` function and based on the output creates the file
 If certain options are set, it translate the text into polish phonetics or add extra chinese text below the pinyin one.
 
 ### translator.jison
 Main jison file. It translates the pinyin into musical notation.
 The way it works is really easy. First the lexer is looking for either `TEXT` or `NUMBER` which are expressed with those regular expressions:
-- TEXT - ([a-z]|[A-Z])+
-- NUMBER - [1-4]
+- `TEXT` - ([a-z]|[A-Z])+
+- `NUMBER` - [1-4]
 
 Then parser is recursively looking for either a lone `TEXT` or `TEXT` with `NUMBER` for example:
 - pin
@@ -71,11 +71,27 @@ Lexer in this jison file has much more declarations, one for each letter, which 
 
 The parser is looking for a groups or single letter and translates it so it will suit polish language more.
 For example:
-- `sh` is translated into `sz`,
-- `x` is translated into `ś`,
+- `sh` is translated into `sz`
+- `x` is translated into `ś`
 - `ch` is translated into `cz`
 
 It returns the modified text. Later in the program there is an if statement that checks if user wanted to have polish text.
 
+## Other information
+This project uses <a href="https://pugjs.org">`pug`</a> which is a high-performance template engine.
+It simplifies the HTML syntax and adds new options like `if` statements or `for` loops.
 
+This project contains 3 .pug files:
+- `main_page.pug` - used to render the main page
+- `form.pug` - used for the form on the main page
+- `translate.pug` - used to render the translation page
+
+All styles are in the `main.css` file located in the views->styles
+
+
+## Run
+To run the project first you have to install all dependencies by writing `npm install` in command line.
+When you have everything installed, type `node server.js` to run this application.
+
+The server runs on the `localhost:8080`.
 
