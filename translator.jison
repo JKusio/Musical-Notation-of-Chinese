@@ -11,7 +11,7 @@
 .                          // ignore any other character
 /lex
 
-%server exp
+%start exp
 
 %%
 exp

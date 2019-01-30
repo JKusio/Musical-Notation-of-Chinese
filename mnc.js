@@ -5,7 +5,6 @@ const fs = require("fs");
 const pinyin = require("pinyin");
 // js library which add bison and lex
 const jison = require("jison");
-var bnf = fs.readFileSync("translator.jison", "utf-8");
 
 var d = new Date();
 
@@ -34,10 +33,11 @@ let content = {
     text: '',
 };
 
-var parser = createParser(content);
+var parser = createParser(content, "translator.jison");
 
 // creates pareser and pass some values into it
-function createParser(content) {
+function createParser(content, parser_path) {
+    var bnf = fs.readFileSync(parser_path, "utf-8");
     let parser = new jison.Parser(bnf);
     parser.yy.content = content;
     return parser;
@@ -53,7 +53,7 @@ function translateToPinyin(text) {
 }
 
 // generate .ly file
-function generateFile(text, extra) {
+function generateFile(text, extra, to_polish) {
     var data = translateToPinyin(text);
 
     const PATH = FILE_PATH + `mnc_${d.getTime()}.ly`;
@@ -74,6 +74,18 @@ function generateFile(text, extra) {
         } while (m);
     }
 
+    let polish_data;
+
+    // text to polish if set
+    if(to_polish) {
+        let polish_content = {
+            text: ''
+        };
+
+        let polish_parser = createParser(polish_content, "polish.jison");
+        polish_data = polish_parser.parse(data.text).content;
+    }
+
     stream.once('open', function(fd) {
         stream.write("\\version \"2.14.1\"\n");
         stream.write("<<\n");
@@ -83,7 +95,11 @@ function generateFile(text, extra) {
         stream.write(data.notes + "\n");
         stream.write("}\n");
         stream.write("\\addlyrics {\n");
-        stream.write(data.text + "\n");
+        if(to_polish) {
+            stream.write(polish_data.text + "\n");
+        } else {
+            stream.write(data.text + "\n");
+        }
         stream.write("}\n");
         stream.write(">>");
 

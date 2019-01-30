@@ -22,7 +22,7 @@ server.get('/', function(req, res) {
 
 // renders post-translation page
 server.post('/translate', function(req, res) {
-    var file = mnc.generateFile(req.body.text, req.body.extra);
+    var file = mnc.generateFile(req.body.text, req.body.extra, req.body.to_polish);
 
     res.render('translate', {
            path: file
