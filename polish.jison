@@ -99,7 +99,7 @@ pinyin
         yy.content.text += 'dż';
     }
     | c h {
-        yy.content.text += 'czh';
+        yy.content.text += 'cz';
     }
     | s h {
         yy.content.text += 'sz';

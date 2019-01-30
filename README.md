@@ -43,8 +43,39 @@ Next variable is `content` which is used in parser.
 It contains basic options of the parser, like musical representation of tones (syntax for <a href="http://lilypond.org/"> LilyPond </a>).
 
 There are 3 functions declared in this file:
-- `function createParser(content, parser_path) which creates parser based on the `content` we want to use in the parser (which later we'll be able to use outside the parser) and `path` which is the path to the .jison file,
+- `function createParser(content, parser_path)` which creates parser based on the `content` we want to use in the parser (which later we'll be able to use outside the parser) and `path` which is the path to the .jison file,
 - `function translateToPinyin(text)` which translates the chinese into the tones and lyrics in basic pinyin (not polish translated),
 - `function generateFile(text, extra, to_polish)` which runs the `translateToPinyin` function and based on the output creates the file.
 If certain options are set, it translate the text into polish phonetics or add extra chinese text below the pinyin one.
+
+### translator.jison
+Main jison file. It translates the pinyin into musical notation.
+The way it works is really easy. First the lexer is looking for either `TEXT` or `NUMBER` which are expressed with those regular expressions:
+- TEXT - ([a-z]|[A-Z])+
+- NUMBER - [1-4]
+
+Then parser is recursively looking for either a lone `TEXT` or `TEXT` with `NUMBER` for example:
+- pin
+- pin1
+- xiang4
+
+Based on the number it chooses the right notes from the `content` variable declared before and adds it into the variable `notes`.
+It also adds the `TEXT` into the variable `text`.
+
+It returns the notes and lyrics that are later used in the application.
+
+### polish.jison
+Jison file that is used to make phonetic transcription of pinyin to polish.
+
+Lexer in this jison file has much more declarations, one for each letter, which are later made into groups or left single.
+
+The parser is looking for a groups or single letter and translates it so it will suit polish language more.
+For example:
+- `sh` is translated into `sz`,
+- `x` is translated into `ś`,
+- `ch` is translated into `cz`
+
+It returns the modified text. Later in the program there is an if statement that checks if user wanted to have polish text.
+
+
 
