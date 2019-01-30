@@ -41,3 +41,10 @@ For example: 拼音 => pin1 yin1
 
 Next variable is `content` which is used in parser.
 It contains basic options of the parser, like musical representation of tones (syntax for <a href="http://lilypond.org/"> LilyPond </a>).
+
+There are 3 functions declared in this file:
+- `function createParser(content, parser_path) which creates parser based on the `content` we want to use in the parser (which later we'll be able to use outside the parser) and `path` which is the path to the .jison file,
+- `function translateToPinyin(text)` which translates the chinese into the tones and lyrics in basic pinyin (not polish translated),
+- `function generateFile(text, extra, to_polish)` which runs the `translateToPinyin` function and based on the output creates the file.
+If certain options are set, it translate the text into polish phonetics or add extra chinese text below the pinyin one.
+
