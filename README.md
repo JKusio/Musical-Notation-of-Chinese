@@ -1,5 +1,5 @@
 # Musical Notation of Chinese - MNC
-Interpreter of chinese language that translates it into musical notation of basic chinese tones.
+Interpreter of chinese language that translates it into musical notation of chinese tones.
 
 <div align="center">
     <a href="https://github.com/KusioDev/drag.js">
