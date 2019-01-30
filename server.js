@@ -31,7 +31,7 @@ server.post('/translate', function(req, res) {
 
 // download file
 server.get('/download', function(req, res){
-    res.download(path.join(__dirname, req.query.path), function (err) {
+    res.download(path.join(__dirname, req.query.filepath), function (err) {
         console.log(err);
     });
 
